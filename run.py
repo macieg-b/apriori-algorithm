@@ -1,6 +1,8 @@
-import scipy
 import numpy as np
+import scipy.io
+
 from model import Calculation
+import matplotlib.pyplot as plt
 
 fileName = 'data/reuters.mat'
 mat = scipy.io.loadmat(fileName)
@@ -30,30 +32,8 @@ data = np.array([
     [1, 1, 1, 1, 1, 1],
     [1, 0, 1, 1, 1, 1],
     [0, 0, 1, 1, 0, 0],
-])  # apriori.png
-# 7, 0.5
+])
 
-# data = np.array([
-#    [1, 0, 1, 1, 0],
-#    [0, 1, 1, 0, 1],
-#    [1, 1, 1, 0, 1],
-#    [0, 1, 0, 0, 1],
-#    [1, 0, 1, 0, 1],
-# ])
-# 2, 0.6
-
-# data = np.array([
-#    [1, 1, 0, 0, 1],
-#    [0, 1, 0, 1, 0],
-#    [0, 1, 1, 0, 0],
-#    [1, 1, 0, 1, 0],
-#    [1, 0, 1, 0, 0],
-#    [0, 1, 1, 0, 0],
-#    [1, 0, 1, 0, 0],
-#    [1, 1, 1, 0, 1],
-#    [1, 1, 1, 0, 0],
-# ])
-# 2, 0.7
 
 minimumSupportCount = 7
 minimumConfidence = 0.5
@@ -76,12 +56,14 @@ for i in rules:
     a, b = i['att1'], i['att2']
     s = ""
     for x in a:
-        s += attributes[x] + " "
+        s += str(attributes[x]) + " "
     s += "=> "
     for x in b:
-        s += attributes[x] + " "
+        s += str(attributes[x]) + " "
 
     a = {'rule': s,
          'confidence': i['confidence'],
          'support': i['support'], }
     r.append(a)
+
+print(r)
