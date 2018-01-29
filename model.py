@@ -1,6 +1,7 @@
 import numpy as np
 import itertools
 
+
 class Calculation:
     minimumSupportCount = 7
     minimumConfidence = 0.5
@@ -28,7 +29,7 @@ class Calculation:
         return list(itertools.combinations(listOfKeys, k + 1))
 
     @staticmethod
-    def apriori(binTab, minSupp, minConf):
+    def apriori(binTab):
         iteration = 0
         candidates = range(len(binTab[0]))
         frequentItemSets = []
@@ -93,7 +94,7 @@ class Calculation:
                         'support': supp,
                     }
 
-                    if r['confidence'] >= minConf:
+                    if r['confidence'] >= Calculation.minimumConfidence:
                         rules.append(r)
 
         return rules, new_frequentItemSets
@@ -109,6 +110,14 @@ class Calculation:
 
             if tmp <= v:
                 d[k] = v
+
+        tmp = np.array(list(d.keys()))
+        tmp2 = np.array(list(d.values()))
+        sort_index = np.argsort(np.array(tmp))
+
+        for i in range(1, len(sort_index) - 1):
+            if (tmp2[sort_index[i + 1]] >= tmp2[sort_index[i]]):
+                d[tmp[sort_index[i]]] = tmp2[sort_index[i - 1]]
 
         return d
 

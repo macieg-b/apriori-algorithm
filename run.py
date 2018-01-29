@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 fileName = 'data/reuters.mat'
 mat = scipy.io.loadmat(fileName)
 
-# attributes = mat['TOPICS_COLUMN_NAMES'][0][0:1500]
-# data = mat['TOPICS'][0:1500]
+# attributes = mat['TOPICS_COLUMN_NAMES'][0][0:2500]
+# data = mat['TOPICS'][0:2500]
 
 attributes = np.array(['x1', 'x2', 'x3', 'x4', 'x5', 'x6'])
 data = np.array([
@@ -35,14 +35,11 @@ data = np.array([
 ])
 
 
-minimumSupportCount = 7
-minimumConfidence = 0.5
-
-rules, fis = Calculation.apriori(data, minimumSupportCount, minimumConfidence)
+rules, fis = Calculation.apriori(data)
 aprioriLine = Calculation.findPareto(rules)
 
 for value in rules:
-    plt.plot(value['x'], value['confidence'], '*')
+    plt.plot(value['x'], value['confidence'], 'k*')
 
 tmp = np.array(list(aprioriLine.keys()))
 tmp2 = np.array(list(aprioriLine.values()))
@@ -56,10 +53,10 @@ for i in rules:
     a, b = i['att1'], i['att2']
     s = ""
     for x in a:
-        s += str(attributes[x]) + " "
+        s += attributes[x][0] + " "
     s += "=> "
     for x in b:
-        s += str(attributes[x]) + " "
+        s += attributes[x][0] + " "
 
     a = {'rule': s,
          'confidence': i['confidence'],
