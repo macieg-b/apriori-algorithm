@@ -104,7 +104,7 @@ class Calculation:
         d = dict()
 
         for value in rules:
-            k = value['x']
+            k = value['support']
             v = value['confidence']
             tmp = d.get(k, v)
 
@@ -116,8 +116,10 @@ class Calculation:
         sort_index = np.argsort(np.array(tmp))
 
         for i in range(1, len(sort_index) - 1):
-            if (tmp2[sort_index[i + 1]] >= tmp2[sort_index[i]]):
-                d[tmp[sort_index[i]]] = tmp2[sort_index[i - 1]]
+            if tmp2[sort_index[i + 1]] >= tmp2[sort_index[i]]:
+                d[tmp[sort_index[i]]] = tmp2[sort_index[2]]
+
+        if d[tmp[sort_index[0]]] < d[tmp[sort_index[1]]]:
+            d[tmp[sort_index[0]]] = None
 
         return d
-

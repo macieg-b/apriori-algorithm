@@ -39,7 +39,7 @@ rules, fis = Calculation.apriori(data)
 aprioriLine = Calculation.findPareto(rules)
 
 for value in rules:
-    plt.plot(value['x'], value['confidence'], 'k*')
+    plt.plot(value['support'], value['confidence'], 'k*')
 
 tmp = np.array(list(aprioriLine.keys()))
 tmp2 = np.array(list(aprioriLine.values()))
@@ -64,3 +64,9 @@ for i in rules:
     r.append(a)
 
 print(r)
+
+test_arr = []
+for value in rules:
+    test_arr.append((value['support'], value['confidence']))
+
+print("Unique points: %d" % len(set(test_arr)))
